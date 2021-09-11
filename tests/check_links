@@ -15,11 +15,14 @@ import requests
 
 projects_file = "_data/projects.csv"
 achievements_file = "_data/achievements.csv"
+timeline_file = "_data/timeline.csv"
+timeline_markdown_file = "timeline/README.md"
 markdown_file = "README.md"
 
 links = []
 projects = []
 achievements = []
+timeline = []
 exit_status = 0
 
 print(f"Collecting URLs from {projects_file}")
@@ -46,6 +49,18 @@ with open(achievements_file) as f:
 
 links += achievements
 
+print(f"Collecting URLs from {timeline_file}")
+
+with open(timeline_file) as f:
+    lines = f.readlines()
+
+    for l in  csv.reader(lines, quotechar='"', delimiter=',', quoting=csv.QUOTE_ALL, skipinitialspace=True):
+        timeline.append(l[4])
+
+    timeline.pop(0)
+
+links += timeline
+
 print(f"Collecting URLs from {markdown_file}")
 
 with open(markdown_file) as f:
@@ -55,6 +70,16 @@ extractor = URLExtract()
 markdown = extractor.find_urls(text)
 
 links += markdown
+
+print(f"Collecting URLs from {timeline_markdown_file}")
+
+with open(timeline_markdown_file) as f:
+    text = f.read()
+
+extractor = URLExtract()
+timeline_markdown = extractor.find_urls(text)
+
+links += timeline_markdown
 
 print("Cleaning up list of URLs")
 
