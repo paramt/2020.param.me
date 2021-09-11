@@ -1,0 +1,42 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include meta.html %}
+    <title> {{ site.title }} | Param Thakkar</title>
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/css/style.css">
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/css/animate.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins|Open+Sans:300" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <script defer src="{{site.baseurl}}/assets/js/script.js"></script>
+    {% include favicon.html %}
+  </head>
+
+  <body>
+    <div id="overlay"></div><div id="transition-overlay"></div>
+
+    <div class="container">
+      <h1>{{ site.title }}</h1>
+      <span id="arrow"><i class="fas fa-angle-down"></i></span>
+    </div>
+
+    <div class="timeline" id="timeline-highlight">
+      {% for event in site.data.timeline %}
+        <div class="tcontainer {% cycle "left", "right" %}">
+          <div class="tcontent">
+            <h2>{{ event.title }}</h2>
+            <p class="light">{{ event.date }}</p>
+            <p>{{ event.desc || markdownify}}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="content">
+      {% include footer.html %}
+    </div>
+
+  </body>
+</html>
