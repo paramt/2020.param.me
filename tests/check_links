@@ -14,13 +14,16 @@ from urlextract import URLExtract
 import requests
 
 projects_file = "_data/projects.csv"
+projects_full_file = "_data/projects-full.csv"
 achievements_file = "_data/achievements.csv"
 timeline_file = "_data/timeline.csv"
 timeline_markdown_file = "timeline/README.md"
+projects_markdown_file = "projects/README.md"
 markdown_file = "README.md"
 
 links = []
 projects = []
+projects_full = []
 achievements = []
 timeline = []
 exit_status = 0
@@ -36,6 +39,18 @@ with open(projects_file) as f:
     projects.pop(0)
 
 links += projects
+
+print(f"Collecting URLs from {projects_full_file}")
+
+with open(projects_file) as f:
+    lines = f.readlines()
+
+    for l in  csv.reader(lines, quotechar='"', delimiter=',', quoting=csv.QUOTE_ALL, skipinitialspace=True):
+        projects_full.append(l[4])
+
+    projects_full.pop(0)
+
+links += projects_full
 
 print(f"Collecting URLs from {achievements_file}")
 
@@ -80,6 +95,16 @@ extractor = URLExtract()
 timeline_markdown = extractor.find_urls(text)
 
 links += timeline_markdown
+
+print(f"Collecting URLs from {projects_markdown_file}")
+
+with open(projects_markdown_file) as f:
+    text = f.read()
+
+extractor = URLExtract()
+projects_markdown = extractor.find_urls(text)
+
+links += projects_markdown
 
 print("Cleaning up list of URLs")
 
