@@ -64,18 +64,6 @@ with open(achievements_file) as f:
 
 links += achievements
 
-print(f"Collecting URLs from {timeline_file}")
-
-with open(timeline_file) as f:
-    lines = f.readlines()
-
-    for l in  csv.reader(lines, quotechar='"', delimiter=',', quoting=csv.QUOTE_ALL, skipinitialspace=True):
-        timeline.append(l[4])
-
-    timeline.pop(0)
-
-links += timeline
-
 print(f"Collecting URLs from {markdown_file}")
 
 with open(markdown_file) as f:
